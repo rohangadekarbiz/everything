@@ -244,17 +244,25 @@
   function renderCarousel(c, author) {
     const slides = c.slides.concat(c.cta === false ? [] : [Object.assign({ kind: "cta" }, c.cta || {})]);
     const total = slides.length;
-    const ctx = { theme: c.theme, author };
+    const ctx = { theme: c.theme, author, carousel: c, total };
+    // c.chrome === false drops the header/footer scaffolding: the slide carries only its content.
+    const chrome = c.chrome !== false;
     return slides.map((s, i) => {
       const fn = L[s.kind];
       if (!fn) throw new Error(`Unknown slide kind: ${s.kind}`);
       const last = i === total - 1;
+      ctx.index = i;
+      // A layout returns its HTML, or { main, art, cls } where art is a full-slide layer that may bleed off the edges.
+      const out = fn(s, ctx);
+      const main = typeof out === "string" ? out : out.main;
+      const art = typeof out === "string" || !out.art ? "" : `<div class="s-art hv">${out.art}</div>`;
+      const cls = typeof out === "string" || !out.cls ? "" : " " + out.cls;
       // s.bg: a full-bleed background image (e.g. an illustration with space left for the headline).
       const bg = s.bg ? ` style="background-image:url('${esc(s.bg)}');background-size:cover;background-position:center bottom"` : "";
-      return `<section class="slide t-${c.theme} k-${s.kind}${s.bg ? " has-bg" : ""}" data-carousel="${esc(c.id)}" data-n="${i + 1}"${bg}>
-        <header class="s-top"><span class="who"><span class="mark">${esc(author.initials)}</span>${esc(author.name)}</span><span>${pad(i + 1)} / ${pad(total)}</span></header>
-        <div class="s-main">${fn(s, ctx)}</div>
-        <footer class="s-foot"><span>${esc(c.footer || c.type)}</span><span class="swipe">${last ? "" : i === 0 ? "Swipe →" : "→"}</span></footer>
+      return `<section class="slide t-${c.theme} k-${s.kind}${s.bg ? " has-bg" : ""}${chrome ? "" : " no-chrome"}${cls}" data-carousel="${esc(c.id)}" data-n="${i + 1}"${bg}>
+        ${chrome ? `<header class="s-top"><span class="who"><span class="mark">${esc(author.initials)}</span>${esc(author.name)}</span><span>${pad(i + 1)} / ${pad(total)}</span></header>` : ""}
+        ${art}<div class="s-main">${main}</div>
+        ${chrome ? `<footer class="s-foot"><span>${esc(c.footer || c.type)}</span><span class="swipe">${last ? "" : i === 0 ? "Swipe →" : "→"}</span></footer>` : ""}
       </section>`;
     });
   }

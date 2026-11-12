@@ -22,11 +22,11 @@ tone = Image.new("L", (w, h), 0)
 px = tone.load()
 for y in range(0, h):
     for x in range(0, w):
-        t = 0.30 + 0.45 * (x / w) + 0.22 * (y / h) - 0.18 * math.exp(-(((x - cx * 0.8) / (260 * S)) ** 2 + ((y - 300 * S) / (300 * S)) ** 2))
+        t = 0.12 + 0.34 * (x / w) + 0.14 * (y / h) - 0.14 * math.exp(-(((x - cx * 0.8) / (260 * S)) ** 2 + ((y - 300 * S) / (300 * S)) ** 2))
         px[x, y] = max(0, min(255, int(255 * (1 - t))))
 
 # 3. halftone dots on a 45 degree grid
-cell = 13 * S
+cell = 16 * S
 dots = Image.new("L", (w, h), 255)
 dd = ImageDraw.Draw(dots)
 for j in range(-2, int(h / (cell / 2)) + 2):
@@ -46,6 +46,7 @@ out.paste((255, 255, 255, 255), mask=border)
 fig = Image.merge("RGBA", [dots, dots, dots, mask])
 out.alpha_composite(fig)
 out = out.resize((W, H), Image.LANCZOS)
+box = out.getbbox(); out = out.crop((box[0], box[1], box[2], H))  # trim to the sticker edge; shoulders run off the bottom
 dst = os.path.join(os.path.dirname(__file__), "..", "assets", "author-placeholder.png")
 out.save(dst)
 print("wrote", os.path.normpath(dst), out.size)

@@ -14,6 +14,12 @@ Designs LinkedIn carousels in HTML/CSS and exports them as upload-ready PDFs (10
 | `slide.html` | Page the exporter renders, one carousel at a time (`slide.html?id=loops`). |
 | `export.mjs` | Playwright exporter. |
 
+## House style (no scaffolding)
+
+`theme: "house", chrome: false, cta: false` gives the explainer-collage house style from `engine/house.js`: no header, footer, counter, kicker or swipe pill. Slide kinds: `hCover`, `hStrips`, `hCycle`, `hStatement`, `hLoop`, `hLedger`, `hMyth`, `hEnd`. Examples are in `content/house-pilot.js` (`house-loops`, `house-metrics`, `house-myths`, plus `-noface` variants of each cover).
+
+`chrome: false` works on any carousel and drops the header/footer. `CAROUSEL_AUTHOR.photo` is the author's background-removed portrait (ideally a B&W halftone cut-out with a white sticker border); it stands on the bottom edge of the cover and closing slide. `face: false` on a carousel leaves it out. `tools/make_placeholder.py` regenerates the neutral placeholder, `tools/contact_sheet.py out/review.png <id>…` builds a contact sheet.
+
 ## Export
 
 ```sh
