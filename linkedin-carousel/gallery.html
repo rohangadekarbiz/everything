@@ -1,0 +1,225 @@
+<title>Growth Carousel Swipe File</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Caveat:wght@400..700&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Instrument+Sans:wght@400..700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400..800&family=Kalam:wght@400;700&family=Schibsted+Grotesk:wght@400..900&display=swap">
+<link rel="stylesheet" href="engine/slides.css">
+<style>
+/* Layout: a single reading column; each carousel is a row of real slides you can open full size. */
+:root {
+  --bg: #eef0f3; --surface: #ffffff; --fg: #14171c; --muted: #5b6370; --line: #d6dae1;
+  --accent: #2531c9; --accent-fg: #ffffff; --chip: #e2e5ea;
+  --f-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --k: 0.24;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1115; --surface: #181b21; --fg: #e9ecf1; --muted: #9aa3b1; --line: #2a2f38;
+    --accent: #9aa1ff; --accent-fg: #0f1115; --chip: #22262e; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1115; --surface: #181b21; --fg: #e9ecf1; --muted: #9aa3b1; --line: #2a2f38;
+  --accent: #9aa1ff; --accent-fg: #0f1115; --chip: #22262e; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font: 400 16px/1.55 var(--f-body); }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 56px 72px; }
+
+/* header */
+.eyebrow { font: 600 12px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 800 clamp(40px, 7vw, 76px)/.95 var(--f-display); letter-spacing: -0.04em; margin: 16px 0 20px; text-wrap: balance; }
+.intro { max-width: 62ch; font-size: 18px; color: var(--fg); margin: 0; }
+.intro + .intro { color: var(--muted); font-size: 15px; margin-top: 10px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 24px; font: 500 13px/1.4 var(--f-mono); color: var(--muted); }
+.facts b { color: var(--fg); font-weight: 600; }
+
+/* filter */
+.filter { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); margin-top: 36px; padding: 14px 0; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { appearance: none; border: 1px solid var(--line); background: var(--surface); color: var(--fg); font: 600 14px/1 var(--f-body); padding: 10px 14px; border-radius: 999px; cursor: pointer; }
+.chip span { font-family: var(--f-mono); font-weight: 500; color: var(--muted); margin-left: 6px; }
+.chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.chip[aria-pressed="true"] span { color: inherit; opacity: .7; }
+.chip:focus-visible, .thumb:focus-visible, .lb button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.filter-note { font-size: 14px; color: var(--muted); min-width: 0; flex: 1 1 260px; }
+
+/* entries */
+.entries { list-style: none; margin: 0; padding: 0; }
+.entry { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 20px 40px; padding: 40px 0; border-bottom: 1px solid var(--line); }
+.meta { min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.meta .num { font: 600 13px/1 var(--f-mono); color: var(--muted); letter-spacing: .08em; }
+.meta h2 { font: 700 28px/1.05 var(--f-display); letter-spacing: -0.025em; margin: 0; text-wrap: balance; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font: 500 12px/1 var(--f-mono); padding: 6px 8px; border-radius: 6px; background: var(--chip); color: var(--muted); }
+.tag.goal { background: var(--accent); color: var(--accent-fg); }
+.meta dl { margin: 6px 0 0; display: grid; gap: 12px; }
+.meta dt { font: 600 11px/1 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.meta dd { margin: 0; font-size: 15px; line-height: 1.5; }
+.strip { min-width: 0; overflow-x: auto; display: flex; gap: 14px; padding: 2px 2px 14px; scroll-snap-type: x proximity; }
+.thumb { flex: none; width: calc(1080px * var(--k)); height: calc(1350px * var(--k)); padding: 0; border: 0; background: none; cursor: zoom-in; position: relative; overflow: hidden; border-radius: 4px; box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 8px 24px -16px rgba(0,0,0,.35); scroll-snap-align: start; }
+.thumb .slide { transform: scale(var(--k)); transform-origin: 0 0; pointer-events: none; }
+@media (max-width: 860px) { .entry { grid-template-columns: minmax(0, 1fr); } :root { --k: 0.2; } }
+@media (max-width: 420px) { :root { --k: 0.18; } }
+
+/* rules + sources */
+.end { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 40px; margin-top: 56px; }
+.end h3 { font: 700 22px/1.1 var(--f-display); letter-spacing: -0.02em; margin: 0 0 14px; }
+.end ol, .end ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 15px; }
+.end p { font-size: 15px; color: var(--muted); margin: 0 0 10px; }
+.end code { font: 500 13px var(--f-mono); background: var(--chip); padding: 2px 6px; border-radius: 4px; }
+
+/* lightbox */
+.lb { border: 0; padding: 0; background: transparent; max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; }
+.lb::backdrop { background: rgba(8,10,14,.86); }
+.lb-inner { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: max(12px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) max(12px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); box-sizing: border-box; }
+.lb-stage { position: relative; overflow: hidden; border-radius: 4px; }
+.lb-stage .slide { transform-origin: 0 0; }
+.lb-bar { display: flex; align-items: center; gap: 10px; color: #e9ecf1; font: 500 13px/1 var(--f-mono); }
+.lb button { appearance: none; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.08); color: #fff; font: 600 14px/1 var(--f-body); padding: 10px 14px; border-radius: 8px; cursor: pointer; }
+.lb button:disabled { opacity: .35; cursor: default; }
+.lb-count { min-width: 64px; text-align: center; }
+@media (prefers-reduced-motion: no-preference) { .thumb { transition: transform .15s ease; } .thumb:hover { transform: translateY(-2px); } }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">LinkedIn carousels · business growth &amp; growth marketing</p>
+    <h1>Growth Carousel Swipe File</h1>
+    <p class="intro">20 carousel types that get saved, reposted or argued about, each built as a real sample in your niche. Every slide below is the actual 1080 × 1350 design, and the same code exports it as an upload-ready PDF.</p>
+    <p class="intro">Slide copy is sample copy. Numbers tagged "Sample data" are illustrative; cited facts name their source on the slide. Tap any slide to view it full size.</p>
+    <div class="facts"><span><b>20</b> carousel types</span><span><b>10</b> visual styles</span><span><b>1080 × 1350</b> portrait slides</span><span><b>45px+</b> body text</span></div>
+  </header>
+
+  <nav class="filter" aria-label="Filter by what the carousel is built to earn">
+    <div class="chips" id="chips"></div>
+    <p class="filter-note" id="filter-note"></p>
+  </nav>
+
+  <ol class="entries" id="entries"></ol>
+
+  <section class="end" aria-label="Rules and sources">
+    <div>
+      <h3>House rules</h3>
+      <ol>
+        <li>4:5 portrait, 1080 × 1350. It takes the most room in the mobile feed.</li>
+        <li>6–10 slides, one idea per slide, roughly 20–40 words each.</li>
+        <li>Body text 45px or larger. If you can't read it on a phone, it fails.</li>
+        <li>Slide 2 changes the pace. The drop from slide 1 to 2 is the biggest.</li>
+        <li>Two typefaces and one accent colour per carousel. Same closing card every time.</li>
+        <li>No stock gradients, no decorative AI images, no emoji bullets.</li>
+        <li>Judge styles against your own average saves and reposts, not big creators' numbers.</li>
+      </ol>
+    </div>
+    <div>
+      <h3>Cited on the slides</h3>
+      <ul>
+        <li>"5–25× more expensive": Amy Gallo, <em>The Value of Keeping the Right Customers</em>, Harvard Business Review, 2014.</li>
+        <li>"The purpose of business is to create a customer": Peter Drucker, <em>The Practice of Management</em>, 1954.</li>
+        <li>AARRR: Dave McClure, <em>Startup Metrics for Pirates</em>, 2007.</li>
+        <li>ICE scoring and the 40% "very disappointed" test: Sean Ellis.</li>
+        <li>Growth loops: popularised by Reforge.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Make your own</h3>
+      <p>The engine lives in <code>linkedin-carousel/</code>. Edit the copy in <code>content/growth-examples.js</code>, set your name at the top, then run:</p>
+      <p><code>node export.mjs --check</code></p>
+      <p>Each carousel comes out as <code>out/&lt;id&gt;.pdf</code> to upload as a LinkedIn document post, plus a PNG per slide.</p>
+    </div>
+  </section>
+</div>
+
+<dialog class="lb" id="lb" aria-label="Slide viewer">
+  <div class="lb-inner" id="lb-inner">
+    <div class="lb-stage" id="lb-stage"></div>
+    <div class="lb-bar">
+      <button type="button" id="lb-prev" aria-label="Previous slide">←</button>
+      <span class="lb-count" id="lb-count"></span>
+      <button type="button" id="lb-next" aria-label="Next slide">→</button>
+      <button type="button" id="lb-close">Close</button>
+    </div>
+  </div>
+</dialog>
+
+<script src="engine/render.js"></script>
+<script src="content/growth-examples.js"></script>
+<script>
+(function () {
+  const STYLE = { blueprint: "Blueprint", sheet: "Spreadsheet", lab: "Lab report", oxblood: "Oxblood serif", grid: "Graph paper + red pen", board: "Whiteboard", cobalt: "Ultramarine poster", dict: "Reference book", dash: "Dashboard", mustard: "Condensed poster" };
+  const GOAL = {
+    all: { label: "All", note: "Every type. Filter by what each carousel is built to earn." },
+    saves: { label: "Saves", note: "References people come back to: cheat sheets, checklists, templates, frameworks." },
+    reposts: { label: "Reposts", note: "Ideas people pass on to look smart: one big number, before/after, teardowns, quotes." },
+    comments: { label: "Comments", note: "Prompts that invite a reply: myths, hot takes, mistakes, self-scores." },
+  };
+  const data = window.CAROUSELS, author = window.CAROUSEL_AUTHOR;
+  const rendered = data.map((c) => Carousel.renderCarousel(c, author));
+  const esc = (s) => String(s).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+
+  // entries
+  document.getElementById("entries").innerHTML = data.map((c, i) => `
+    <li class="entry" data-goal="${c.goal}" id="${c.id}">
+      <div class="meta">
+        <span class="num">${String(i + 1).padStart(2, "0")} / 20</span>
+        <h2>${esc(c.type)}</h2>
+        <div class="tags"><span class="tag goal">Built for ${GOAL[c.goal].label.toLowerCase()}</span><span class="tag">${STYLE[c.theme]}</span></div>
+        <dl><div><dt>Why it spreads</dt><dd>${esc(c.why)}</dd></div><div><dt>Steal this</dt><dd>${esc(c.steal)}</dd></div></dl>
+      </div>
+      <div class="strip" role="list" aria-label="${esc(c.type)} slides">
+        ${rendered[i].map((html, n) => `<button type="button" class="thumb" role="listitem" data-c="${i}" data-n="${n}" aria-label="Open slide ${n + 1} of ${rendered[i].length}">${html}</button>`).join("")}
+      </div>
+    </li>`).join("");
+
+  // filter
+  const counts = { all: data.length };
+  data.forEach((c) => (counts[c.goal] = (counts[c.goal] || 0) + 1));
+  const chips = document.getElementById("chips"), note = document.getElementById("filter-note");
+  let current = "all";
+  try { const saved = localStorage.getItem("gcsf-goal"); if (saved && GOAL[saved]) current = saved; } catch (e) {}
+  function applyFilter() {
+    chips.innerHTML = Object.keys(GOAL).map((g) => `<button type="button" class="chip" data-g="${g}" aria-pressed="${g === current}">${GOAL[g].label}<span>${counts[g] || 0}</span></button>`).join("");
+    note.textContent = GOAL[current].note;
+    document.querySelectorAll(".entry").forEach((el) => { el.hidden = current !== "all" && el.dataset.goal !== current; });
+  }
+  chips.addEventListener("click", (e) => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    current = b.dataset.g;
+    try { localStorage.setItem("gcsf-goal", current); } catch (err) {}
+    applyFilter();
+  });
+  applyFilter();
+
+  // lightbox
+  const lb = document.getElementById("lb"), stage = document.getElementById("lb-stage"), count = document.getElementById("lb-count");
+  const prev = document.getElementById("lb-prev"), next = document.getElementById("lb-next");
+  let ci = 0, si = 0;
+  function fit() {
+    const k = Math.min((window.innerHeight - 110) / 1350, (window.innerWidth - 32) / 1080, 1);
+    stage.style.width = 1080 * k + "px"; stage.style.height = 1350 * k + "px";
+    const s = stage.firstElementChild; if (s) s.style.transform = `scale(${k})`;
+  }
+  function show() {
+    stage.innerHTML = rendered[ci][si];
+    count.textContent = `${si + 1} / ${rendered[ci].length}`;
+    prev.disabled = si === 0; next.disabled = si === rendered[ci].length - 1;
+    fit();
+  }
+  document.getElementById("entries").addEventListener("click", (e) => {
+    const t = e.target.closest(".thumb"); if (!t) return;
+    ci = +t.dataset.c; si = +t.dataset.n; show();
+    if (typeof lb.showModal === "function") lb.showModal(); else lb.setAttribute("open", "");
+  });
+  prev.addEventListener("click", () => { if (si > 0) { si--; show(); } });
+  next.addEventListener("click", () => { if (si < rendered[ci].length - 1) { si++; show(); } });
+  document.getElementById("lb-close").addEventListener("click", () => lb.close());
+  document.getElementById("lb-inner").addEventListener("click", (e) => { if (e.target.id === "lb-inner") lb.close(); });
+  lb.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") next.click();
+    if (e.key === "ArrowLeft") prev.click();
+  });
+  window.addEventListener("resize", () => { if (lb.open) fit(); });
+})();
+</script>
