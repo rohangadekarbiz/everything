@@ -133,7 +133,7 @@
     return `
       <div class="h-mythwrap" style="width:${w}px;transform:rotate(${rot}deg);margin-left:${s.x || 0}px">
         <p class="h-myth h-myth-${v}" style="${v === "news" ? torn(s.seed || 5, "rb", 9, 4) : ""}">${fmt(s.myth)}</p>
-        ${svg(w, 300, stroke(s.strike || [[30, 300], [w * 0.3, 230], [w * 0.62, 190], [w - 40, 90]], { sw: 16, seed: s.seed || 5, wob: 8 }), "left:0;top:0")}
+        ${svg(w, 300, stroke(s.strike || [[30, 300], [w * 0.3, 230], [w * 0.62, 190], [w - 40, 90]], { sw: 16, seed: s.seed || 5, wob: 8, color: "var(--strike, var(--marker))" }), "left:0;top:0")}
         ${v === "news" ? "" : tape(w / 2 - 80, -26, rot > 0 ? -3 : 4, 160)}
         ${s.n ? `<span class="h-hand h-mythn">${esc(s.n)}</span>` : ""}
       </div>

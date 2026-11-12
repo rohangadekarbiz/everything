@@ -6,7 +6,7 @@
 */
 (function () {
   const src = (window.PILOTS || []).filter((c) => /^house-(loops|metrics|myths)$/.test(c.id));
-  ["sun", "teal", "block"].forEach((p) => {
+  ["sun", "teal", "block", "electric", "lime", "tangerine", "violet", "pink", "pop"].forEach((p) => {
     src.forEach((c) => window.PILOTS.push(Object.assign({}, c, { id: `${c.id}-${p}`, palette: p })));
   });
 })();

@@ -691,7 +691,7 @@
 /* cover */
 .t-house.k-hCover .s-main { justify-content: flex-start; }
 .h-clip { position: absolute; background: var(--paper); padding: 22px 38px 20px; white-space: nowrap; font: 500 70px/1.1 var(--print); color: #111; filter: drop-shadow(0 10px 10px rgba(0,0,0,.28)); }
-.h-clip::after { content: ""; position: absolute; left: 3%; right: 3%; top: 52%; height: 11px; border-radius: 6px 9px 5px 8px; background: var(--marker); transform: rotate(var(--tilt, -1.5deg)); }
+.h-clip::after { content: ""; position: absolute; left: 3%; right: 3%; top: 52%; height: 11px; border-radius: 6px 9px 5px 8px; background: var(--strike, var(--marker)); transform: rotate(var(--tilt, -1.5deg)); }
 
 /* funnel of strips */
 .h-funnel { display: flex; flex-direction: column; align-items: center; gap: 26px; margin-top: 80px; }
@@ -754,3 +754,38 @@
 .t-house.pal-block.pal-i3:not(.is-ink) { --bg: #e3e2dc; --hlc: #ffe93b; }
 .t-house.pal-block.pal-first:not(.is-ink), .t-house.pal-block.pal-last:not(.is-ink) { --bg: #f6c823; --hlc: #ffffff; }
 .t-house.pal-block.is-ink { --hlc: #f6c823; }
+
+/* ---------- vibrant house palettes ---------- */
+/* electric: electric blue ground, white type, lime marker */
+.t-house.pal-electric:not(.is-ink) { --bg: #2448ff; --ink: #ffffff; --ink2: #dfe5ff; --muted: #b3c0ff; --marker: #d9ff3b; --hlc: #ff4fa8; background-color: var(--bg); color: var(--ink); }
+.t-house.pal-electric.is-ink { --bg: #0a1240; background-color: #0a1240; --marker: #d9ff3b; --hlc: #ff4fa8; }
+
+/* lime: acid lime ground, black type, hot pink marker */
+.t-house.pal-lime:not(.is-ink) { --bg: #d4ff3a; --ink: #0b0b0a; --ink2: #262b10; --muted: #4f5a1c; --marker: #ff2e8f; --hlc: #ffffff; background-color: var(--bg); }
+.t-house.pal-lime.is-ink { --marker: #ff2e8f; --hlc: #d4ff3a; }
+
+/* tangerine: hot orange ground, black type, white marker */
+.t-house.pal-tangerine:not(.is-ink) { --bg: #ff5a1f; --ink: #0b0b0a; --ink2: #2a1206; --muted: #5e2a10; --marker: #ffffff; --hlc: #ffe14d; background-color: var(--bg); }
+.t-house.pal-tangerine.is-ink { --marker: #ff5a1f; --hlc: #ffe14d; }
+
+/* violet: vivid violet ground, white type, lime marker */
+.t-house.pal-violet:not(.is-ink) { --bg: #6c4bff; --ink: #ffffff; --ink2: #e6e0ff; --muted: #c4b8ff; --marker: #d9ff3b; --hlc: #ff7ac8; background-color: var(--bg); color: var(--ink); }
+.t-house.pal-violet.is-ink { --bg: #1a0f4d; background-color: #1a0f4d; --marker: #d9ff3b; --hlc: #ff7ac8; }
+
+/* pink: hot pink ground, black type, electric blue marker */
+.t-house.pal-pink:not(.is-ink) { --bg: #ff5aac; --ink: #0b0b0a; --ink2: #2e0b1d; --muted: #6b1f45; --marker: #1f3dff; --hlc: #ffffff; background-color: var(--bg); }
+.t-house.pal-pink.is-ink { --marker: #ff5aac; --hlc: #ff5aac; }
+
+/* pop: cover and closing in electric blue, inside slides cycle lime / orange / violet / pink */
+.t-house.pal-pop:not(.is-ink) { --ink: #0b0b0a; --ink2: #24221d; --muted: #4f4b40; --marker: #1f3dff; --hlc: #ffffff; background-color: var(--bg); }
+.t-house.pal-pop.pal-i0:not(.is-ink) { --bg: #d4ff3a; --marker: #ff2e8f; }
+.t-house.pal-pop.pal-i1:not(.is-ink) { --bg: #ff5a1f; --marker: #ffffff; --hlc: #ffe14d; }
+.t-house.pal-pop.pal-i2:not(.is-ink) { --bg: #6c4bff; --ink: #ffffff; --ink2: #e6e0ff; --muted: #c4b8ff; --marker: #d9ff3b; --hlc: #ff7ac8; color: #fff; }
+.t-house.pal-pop.pal-i3:not(.is-ink) { --bg: #ff5aac; }
+.t-house.pal-pop.pal-first:not(.is-ink), .t-house.pal-pop.pal-last:not(.is-ink) { --bg: #2448ff; --ink: #ffffff; --ink2: #dfe5ff; --muted: #b3c0ff; --marker: #d9ff3b; --hlc: #ff4fa8; color: #fff; }
+.t-house.pal-pop.is-ink { --marker: #d9ff3b; --hlc: #d4ff3a; }
+
+/* Marks drawn on white paper need a colour that shows on white, whatever the ground colour is. */
+.t-house.pal-electric, .t-house.pal-violet, .t-house.pal-pop { --strike: #ff2e8f; }
+.t-house.pal-tangerine { --strike: #1f3dff; }
+.t-house.pal-teal { --strike: #ff6b3d; }
