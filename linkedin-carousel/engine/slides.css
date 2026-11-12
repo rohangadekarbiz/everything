@@ -792,3 +792,40 @@
 
 /* Face-led cover: headline sits in front of the portrait, like a magazine masthead. */
 .t-house.face-lead .s-main { z-index: 5; }
+
+/* ======================================================================
+   COLOUR TREATMENTS (c.mods), layered on any house palette
+   ====================================================================== */
+.t-house { isolation: isolate; }
+
+/* blob: a solid colour disc behind the portrait */
+.t-house.mod-blob.face-lead::before { content: ""; position: absolute; z-index: -1; width: 860px; height: 860px; border-radius: 50%; right: -200px; bottom: -230px; background: var(--blob, #d9ff3b); }
+/* arch: a tall rounded arch behind the portrait instead of a disc */
+.t-house.mod-arch.face-lead::before { content: ""; position: absolute; z-index: -1; width: 640px; height: 980px; border-radius: 320px 320px 0 0; right: -20px; bottom: 0; background: var(--blob, #d9ff3b); }
+
+/* split: two flat colours divided on a diagonal */
+.t-house.mod-split:not(.is-ink) { background-image: linear-gradient(162deg, var(--bg) 0 54%, var(--bg2, #d9ff3b) 54% 100%); }
+
+/* grain gradient: two warm colours melting into each other, with the paper grain on top */
+.t-house.mod-grad:not(.is-ink) { background-image:
+  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .28 0'/></filter><rect width='400' height='400' filter='url(%23n)'/></svg>"),
+  radial-gradient(90% 70% at 85% 95%, var(--g2, #ff4fa8) 0%, transparent 70%),
+  radial-gradient(80% 60% at 10% 0%, var(--g3, #ffd23f) 0%, transparent 70%),
+  linear-gradient(var(--bg), var(--bg)); }
+
+/* duo: the halftone portrait printed in one ink colour instead of black */
+.t-house.mod-duo .h-face { filter: grayscale(1) sepia(1) hue-rotate(var(--duo-h, 190deg)) saturate(var(--duo-s, 6)) brightness(.95) drop-shadow(0 18px 20px rgba(0,0,0,.3)); }
+
+/* print: the portrait multiplied onto the colour, like ink on coloured paper (sticker border disappears) */
+.t-house.mod-print .h-face { mix-blend-mode: multiply; filter: contrast(1.15); }
+
+/* panel: the headline sits on a solid colour card, slightly tilted */
+.t-house.mod-panel .h-title { align-self: flex-start; background: var(--panel, #d9ff3b); color: var(--panel-ink, #0b0b0a); padding: 18px 30px 26px; transform: rotate(-2deg); box-shadow: 10px 10px 0 #0b0b0a; }
+
+/* frame: a thick coloured border inside the slide edge */
+.t-house.mod-frame::after { content: ""; position: absolute; inset: 0; border: 26px solid var(--frame, #d9ff3b); z-index: 6; pointer-events: none; }
+
+/* title colour: headline in the accent colour */
+.t-house.mod-titlecol .h-title { color: var(--titlecol, #d9ff3b); }
+/* the art layer must not isolate, or the portrait has nothing to multiply onto */
+.t-house.mod-print .s-art { z-index: auto; }
