@@ -18,7 +18,7 @@ window.CAROUSELS = [
     steal: "Name the idea in four words or fewer, then draw it. One diagram beats five bullet slides.",
     footer: "Growth loops",
     slides: [
-      { kind: "cover", kicker: "Growth framework", title: "Funnels leak.\nLoops *compound.*", sub: "Why the best growth teams draw circles, not triangles." },
+      { kind: "hook", kicker: "Growth framework", title: "Funnels leak.\nLoops *compound.*", size: 150, visual: { type: "loop" } },
       { kind: "loops", heading: "A funnel ends. A loop feeds itself." },
       { kind: "list", heading: "3 loops you can build", items: [
         { t: "Content loop", d: "Users create pages. Pages rank in search. Searchers sign up." },
@@ -35,7 +35,7 @@ window.CAROUSELS = [
     steal: "Borrow a format people already trust (a spreadsheet) and fit the whole thing on two slides.",
     footer: "Growth metrics cheat sheet",
     slides: [
-      { kind: "cover", kicker: "Cheat sheet · save this", title: "12 growth metrics on *two slides.*", sub: "Each with its formula and the rule of thumb most SaaS teams use." },
+      { kind: "hook", kicker: "Cheat sheet · save this", title: "12 growth metrics *every founder* should know.", size: 112, visual: { type: "sheet", badge1: "12", badge2: "metrics on 2 slides", rows: [["CAC", "S&M spend ÷ new customers", "Falling"], ["LTV", "ARPA × margin ÷ churn", "3× CAC+"], ["Payback", "CAC ÷ (ARPA × margin)", "< 12 mo"], ["NRR", "(Start + exp − churn) ÷ start", "> 100%"], ["Quick ratio", "(New + exp) ÷ (churn + contr.)", "4+"]] } },
       { kind: "table", heading: "Unit economics", formula: "=LTV/CAC", select: 1,
         cols: ["Metric", "Formula", "Rule of thumb"], widths: ["24%", "46%", "30%"], rows: [
         ["CAC", "Sales + marketing spend ÷ new customers", "Falling over time"],
@@ -64,7 +64,7 @@ window.CAROUSELS = [
     steal: "Number the steps, keep each to one line, and finish with a worked example.",
     footer: "Growth experiments",
     slides: [
-      { kind: "cover", kicker: "How-to · 5 steps", title: "Most growth tests are just *changes.*", sub: "Here's how to run a real experiment instead." },
+      { kind: "hook", kicker: "How-to · 5 steps", title: "Most growth tests are just *changes.*", size: 132, visual: { type: "stamp", id: "EXP-014 · Pricing page", title: "Show the annual price first", fields: [["Hypothesis", "Annual as the default view lifts annual share by 5+ pts."], ["Metric", "Share of new plans that are annual"], ["Duration", "21 days"]], stamp: "WIN", stampSub: "+7.8 PTS" } },
       { kind: "list", items: [
         { t: "Write the hypothesis", d: "“If we ___, then ___ will rise by ___, because ___.”" },
         { t: "Pick one primary metric", d: "Decide what counts as a win before you launch." },
@@ -86,7 +86,7 @@ window.CAROUSELS = [
     steal: "Pick myths your audience actually holds and answer each in one line.",
     footer: "Growth myths",
     slides: [
-      { kind: "cover", kicker: "Myth vs fact", title: "5 growth myths worth *unlearning.*", sub: "Number 3 is the one founders argue about." },
+      { kind: "hook", kicker: "Myth vs fact", title: "5 growth myths worth *unlearning.*", size: 128, visual: { type: "mythlist", items: ["More traffic fixes growth.", "Going viral is luck.", "Growth is marketing's job.", "Copy what worked for them.", "A/B test everything."] } },
       { kind: "mythfact", pairs: [
         { m: "More traffic will fix growth.", f: "If activation is broken, more traffic just leaks faster." },
         { m: "Going viral is luck.", f: "Virality is designed: who gets invited, when, and why they say yes." },
@@ -106,7 +106,7 @@ window.CAROUSELS = [
     steal: "Show the real 'before' (anonymised) and annotate each fix in handwriting.",
     footer: "Homepage teardown",
     slides: [
-      { kind: "cover", kicker: "Before → after", title: "Same product.\nA hero that *converts.*", sub: "3 rewrites that turn a vague homepage into a clear one." },
+      { kind: "hook", kicker: "Before → after", title: "Same product.\nA hero that *converts.*", size: 120, visual: { type: "beforeafter", brand: "Ledgerly", before: { h: "The all-in-one platform to supercharge your workflow", s: "Powerful. Flexible. Modern.", cta: "Get started" }, after: { h: "Close your books in 2 days, not 10.", s: "For finance teams of 5–50.", cta: "Watch the 3-min demo" } } },
       { kind: "hero", state: "before", brand: "Ledgerly", h: "The all-in-one platform to supercharge your workflow", s: "Powerful. Flexible. Built for modern teams.", cta: "Get started",
         notes: ["Could describe any product", "Adjectives, no outcome", "Get started… doing what?"] },
       { kind: "hero", state: "after", brand: "Ledgerly", h: "Close your books in 2 days, not 10.", s: "Accounting automation for finance teams of 5–50 people.", cta: "Watch the 3-min demo",
@@ -121,7 +121,7 @@ window.CAROUSELS = [
     steal: "Write each mistake as a concrete action ('five channels at once'), never vague advice ('lack of focus').",
     footer: "Growth mistakes",
     slides: [
-      { kind: "cover", kicker: "Mistakes", title: "7 mistakes that stall early-stage growth.", sub: "Spot them before they cost you a quarter." },
+      { kind: "hook", kicker: "Mistakes", title: "7 mistakes that stall *early growth.*", size: 120, visual: { type: "stickies", items: ["Ads before retention", "5 channels at once", "Counting sign-ups", "No clear ICP", "Discounting", "Ignoring week one", "Pricing in a vacuum"] } },
       { kind: "stickies", items: ["Scaling ads before retention is proven", "Running five channels at once", "Counting sign-ups, not activated users", "Selling to everyone (no ICP)"] },
       { kind: "stickies", start: 5, items: ["Discounting to fix a value problem", "Ignoring the first 7 days after sign-up", "Changing pricing without talking to customers"], hand: "Which one hurts most? Tell me ↓" },
     ],
@@ -134,7 +134,7 @@ window.CAROUSELS = [
     steal: "Number on the cover, source in small type, the 'so what' on slide 2.",
     footer: "Retention math",
     slides: [
-      { kind: "bigstat", kicker: "Retention", num: "5–25×", text: "more expensive to win a new customer than to keep one you have.", source: "Source: Harvard Business Review, 2014" },
+      { kind: "hook", kicker: "Retention", title: "Winning a customer costs *5–25×* more than keeping one.", size: 104, visual: { type: "bars", a: { value: "1×", label: "Keep a customer", h: 40 }, b: { value: "5–25×", label: "Win a new one", h: 420 }, source: "Source: Harvard Business Review, 2014" } },
       { kind: "list", heading: "Before you raise the ad budget, check three numbers.", items: [
         { t: "Month-1 retention", d: "How many new customers are still active after 30 days?" },
         { t: "Time to value", d: "How long until a new user gets their first result?" },
@@ -154,7 +154,7 @@ window.CAROUSELS = [
     steal: "Three options, five rows at most. Put the decision rule on the next slide.",
     footer: "Go-to-market motions",
     slides: [
-      { kind: "cover", kicker: "Compared", title: "Product-led, sales-led or marketing-led?", sub: "Pick by price point and buyer, not by what's trending." },
+      { kind: "hook", kicker: "Compared", title: "Which growth motion *fits you?*", size: 128, visual: { type: "options", items: [{ t: "Product-led", d: "Free plan or trial. The user buys." }, { t: "Sales-led", d: "Demo and contract. A committee buys." }, { t: "Marketing-led", d: "Content and ads. A team lead buys." }], hand: "pick by price ↓" } },
       { kind: "table", heading: "Which motion fits you?", cols: ["", "Product-led", "Sales-led", "Marketing-led"], widths: ["22%", "26%", "26%", "26%"], rows: [
         ["Price point", "Low, self-serve", "High, contract", "Mid"],
         ["Who buys", "The end user", "A buying committee", "A team lead"],
@@ -177,7 +177,7 @@ window.CAROUSELS = [
     steal: "Fill each quadrant with realistic examples so readers can map their own backlog.",
     footer: "Prioritisation",
     slides: [
-      { kind: "cover", kicker: "Prioritisation", title: "40 growth ideas. One quarter. *Start here.*", sub: "The impact × effort matrix, plus ICE scoring." },
+      { kind: "hook", kicker: "Prioritisation", title: "40 ideas. One quarter. *Start here.*", size: 120, visual: { type: "matrix", quads: [{ t: "Quick wins", s: "High impact · low effort", items: ["Fix onboarding email #1"] }, { t: "Big bets", s: "High impact · high effort", items: ["Referral program"] }, { t: "Fill-ins", s: "Low impact · low effort", items: ["Button colours"] }, { t: "Money pits", s: "Low impact · high effort", items: ["Full rebrand"] }] } },
       { kind: "matrix", heading: "Sort the backlog", x: "Effort →", y: "Impact →", quads: [
         { t: "Quick wins", s: "High impact · low effort", items: ["Fix onboarding email #1", "Social proof on pricing"] },
         { t: "Big bets", s: "High impact · high effort", items: ["Referral program", "Free tool for SEO"] },
@@ -200,7 +200,7 @@ window.CAROUSELS = [
     steal: "Add one question per stage. It turns a diagram into a diagnostic.",
     footer: "AARRR",
     slides: [
-      { kind: "cover", kicker: "Model · Dave McClure, 2007", title: "AARRR: the 5 numbers that run a *growth team.*", sub: "One question to ask at every stage." },
+      { kind: "hook", kicker: "Model · Dave McClure, 2007", title: "The 5 numbers that run a *growth team.*", size: 116, visual: { type: "letters", items: ["Acquisition", "Activation", "Retention", "Referral", "Revenue"] } },
       { kind: "funnel", stages: [
         { n: "Acquisition", q: "Where do our best users come from?" },
         { n: "Activation", q: "Do they reach their first win fast?" },
@@ -224,7 +224,7 @@ window.CAROUSELS = [
     steal: "Use the stage markers your audience already uses (ARR, team size) as the spine.",
     footer: "$0 → $1M ARR",
     slides: [
-      { kind: "cover", kicker: "Roadmap", title: "$0 to $1M ARR: what to focus on at *each stage.*", sub: "Most founders work on stage 4 problems at stage 1." },
+      { kind: "hook", kicker: "Roadmap", title: "$0 to $1M ARR, *stage by stage.*", size: 140, visual: { type: "route", labels: ["$10k", "$100k", "$500k", "$1M"], notes: ["find the pain", "find one channel", "fix retention", "add an engine"] } },
       { kind: "timeline", stages: [
         { at: "$0 – $10k ARR", t: "Find the pain", d: "Founder-led sales. Talk to 50 potential customers and write down their exact words." },
         { at: "$10k – $100k", t: "Find one channel", d: "Pick the single channel that brings your best customers. Ignore the rest." },
@@ -243,7 +243,7 @@ window.CAROUSELS = [
     steal: "Group items by phase and draw real checkboxes.",
     footer: "Launch checklist",
     slides: [
-      { kind: "cover", kicker: "Checklist · save for launch day", title: "The B2B launch checklist.", sub: "13 items across the week before, launch day, and the day after." },
+      { kind: "hook", kicker: "Checklist · save for launch day", title: "The B2B launch-day *checklist.*", size: 128, visual: { type: "clipboard", head: "Week before launch", done: 2, items: ["Sign-up events firing", "UTM link for every channel", "Welcome emails live", "Pricing page tested on mobile", "Demo video under 2 min"], badge1: "13", badge2: "items to tick" } },
       { kind: "checks", groups: [
         { g: "Week before", items: ["Sign-up and activation events firing", "UTM links for every channel", "Welcome email sequence live", "Pricing page tested on mobile"] },
         { g: "Assets", items: ["Demo video under 2 minutes", "Answers to the top 5 objections"] },
@@ -262,7 +262,7 @@ window.CAROUSELS = [
     steal: "Make the blanks visible so readers see exactly what to swap.",
     footer: "Hook formulas",
     slides: [
-      { kind: "cover", kicker: "Swipe file", title: "6 hook formulas for *B2B posts.*", sub: "Fill in the blanks. Steal freely." },
+      { kind: "hook", kicker: "Swipe file", title: "6 hook formulas for *B2B posts.*", size: 150, visual: { type: "cards", items: ["{Old belief} is wrong. Here's why.", "How we {got result} without {cost}.", "I {did X} for {time}. Here's what happened."] } },
       { kind: "hooks", items: ["I {did X} for {time}. Here's what happened.", "{Common belief} is wrong. Here's why.", "How we {got result} without {expected cost}."] },
       { kind: "hooks", start: 4, items: ["The {number}-step {system} we use to {outcome}.", "Stop {common habit}. Do {better habit} instead.", "{Big number} {units} later, here's the one lesson."] },
     ],
@@ -275,7 +275,7 @@ window.CAROUSELS = [
     steal: "State the opinion in four words on the cover. Earn it on the slides after.",
     footer: "Pipeline > MQLs",
     slides: [
-      { kind: "cover", kicker: "Unpopular opinion", title: "Stop chasing *MQLs.*", size: 190, sub: "Your dashboard is measuring the wrong thing." },
+      { kind: "hook", kicker: "Unpopular opinion", visual: { type: "strike", word: "MQLs", after: "Stop chasing them.\nTrack *pipeline* instead." } },
       { kind: "poster", lines: ["An MQL measures interest in your *content.*", "Revenue needs intent to *buy.*"] },
       { kind: "list", heading: "Track these instead", items: [
         { t: "Hand-raisers", d: "Demo requests and direct replies from your ICP." },
@@ -292,10 +292,7 @@ window.CAROUSELS = [
     steal: "Lead with the result in numbers; explain the three changes after.",
     footer: "Case study",
     slides: [
-      { kind: "kpis", kicker: "Case study · sample data", title: "How a 6-person SaaS cut CAC payback from *19 to 11 months.*", tiles: [
-        { label: "CAC payback", before: "19 months", after: "11 mo" },
-        { label: "Trial → paid", before: "9%", after: "14%" },
-      ] },
+      { kind: "hook", kicker: "Case study", title: "How a 6-person SaaS cut CAC payback by *8 months.*", size: 100, visual: { type: "chart", label: "CAC payback, months", pts: [19, 18, 15, 13, 11], min: 4, max: 21, from: "19 mo", to: "11 mo", xl: ["Q1", "Q2", "Q3", "Q4", "Q5"] } },
       { kind: "list", heading: "What they changed", items: [
         { t: "Cut 2 of 4 paid channels", d: "Kept the two that produced customers, not clicks." },
         { t: "Rebuilt onboarding around one first win", d: "Time to first value fell from 3 days to 20 minutes." },
@@ -312,7 +309,7 @@ window.CAROUSELS = [
     steal: "Use a dictionary layout: word, part of speech, one-line definition, one example.",
     footer: "Growth glossary",
     slides: [
-      { kind: "cover", kicker: "Glossary", title: "Growth terms, explained in *one line* each.", sub: "Send this to your next new hire." },
+      { kind: "hook", kicker: "Glossary", title: "Growth terms in *one line* each.", size: 120, visual: { type: "entry", entries: [{ w: "ac·ti·va·tion", pr: "/ˌak-tə-ˈvā-shən/", pos: "noun", d: "The moment a new user first gets real value from your product." }, { w: "co·hort", pr: "/ˈkō-ˌhȯrt/", pos: "noun", d: "Users who started in the same period, tracked together." }] } },
       { kind: "dict", entries: [
         { w: "Activation", p: "noun", d: "The moment a new user first gets real value from your product.", e: "e.g. “Activated = sent their first invoice.”" },
         { w: "Cohort", p: "noun", d: "Users who started in the same period, tracked together over time.", e: "e.g. “The March cohort retains better.”" },
@@ -333,7 +330,7 @@ window.CAROUSELS = [
     steal: "Only use quotes you can source. Your interpretation is the part people remember.",
     footer: "Lessons from Drucker",
     slides: [
-      { kind: "quote", text: "The purpose of business is to create a customer.", who: "Peter Drucker", src: "The Practice of Management, 1954" },
+      { kind: "hook", title: "The purpose of business is to create a *customer.*", size: 158, visual: { type: "quote", who: "Peter Drucker", src: "The Practice of Management, 1954" } },
       { kind: "list", heading: "What it means for growth teams", items: [
         { t: "Customers, not leads", d: "Report on customers created, not on activity." },
         { t: "Marketing and innovation", d: "Drucker called these the only two basic functions of a business." },
@@ -349,7 +346,7 @@ window.CAROUSELS = [
     steal: "Draw the arrows between steps and annotate where the conversion happens.",
     footer: "Content system",
     slides: [
-      { kind: "cover", kicker: "System", title: "One customer call. Five assets. *One pipeline.*", sub: "The content system for small B2B teams." },
+      { kind: "hook", kicker: "System", title: "1 customer call →\n*5 pieces* of content.", size: 116, visual: { type: "fanout", items: ["One long post", "Five short posts", "Weekly newsletter", "Lead magnet", "Demo requests"], hand: "every week" } },
       { kind: "flow", nodes: [
         { t: "Customer call", note: "write down their words" },
         { t: "One long post" },
@@ -373,7 +370,7 @@ window.CAROUSELS = [
     steal: "Finish with a scoring key so readers know what their number means.",
     footer: "Growth scorecard",
     slides: [
-      { kind: "cover", kicker: "Scorecard", title: "Score your growth engine *out of 25.*", sub: "Five questions. Be honest." },
+      { kind: "hook", kicker: "Scorecard", title: "What's your growth score *out of 25?*", size: 120, visual: { type: "gauge", needle: 0.62 } },
       { kind: "scorecard", heading: "Rate each 1–5", rows: [
         "We know which channel brings our best customers.",
         "We can name the moment a user is activated.",
@@ -396,7 +393,7 @@ window.CAROUSELS = [
     steal: "Show the page, mark three details with numbered pins, explain each on the next slide.",
     footer: "Pricing teardown",
     slides: [
-      { kind: "cover", kicker: "Teardown", title: "3 pricing page details that lift *conversion.*", sub: "Spot them before you swipe." },
+      { kind: "hook", kicker: "Teardown", title: "3 details that make this pricing page *convert.*", size: 112, visual: { type: "pricing", h: "Plans that grow with your team", plans: [{ n: "Solo", f: "For freelancers", p: 15 }, { n: "Team", f: "For teams of 2–20", p: 39, pop: true }, { n: "Company", f: "For 20+ people", p: 79 }] } },
       { kind: "pricing", h: "Plans that grow with your team", plans: [
         { n: "Solo", f: "For freelancers", p: 15 },
         { n: "Team", f: "For teams of 2–20", p: 39, pop: true },

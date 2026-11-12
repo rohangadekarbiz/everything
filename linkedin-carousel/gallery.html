@@ -64,6 +64,28 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 @media (max-width: 860px) { .entry { grid-template-columns: minmax(0, 1fr); } :root { --k: 0.2; } }
 @media (max-width: 420px) { :root { --k: 0.18; } }
 
+/* cover wall */
+.covers { margin-top: 48px; }
+.sec-h { font: 800 clamp(28px, 4.4vw, 44px)/1 var(--f-display); letter-spacing: -0.035em; margin: 0 0 10px; }
+.sec-p { max-width: 64ch; color: var(--muted); font-size: 16px; margin: 0 0 26px; }
+.wall { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(1080px * var(--kc)), 1fr)); gap: 26px 18px; --kc: 0.2; }
+.wall > li { min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.wall .thumb { width: calc(1080px * var(--kc)); height: calc(1350px * var(--kc)); }
+.wall .thumb .slide { transform: scale(var(--kc)); }
+.wall .cap { font: 600 13px/1.3 var(--f-mono); color: var(--fg); }
+.wall .cap span { display: block; font-weight: 500; color: var(--muted); margin-top: 3px; }
+@media (max-width: 520px) { .wall { --kc: 0.15; } }
+.rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 18px 28px; list-style: none; padding: 0; margin: 40px 0 0; counter-reset: r; }
+.rules li { counter-increment: r; border-top: 2px solid var(--fg); padding-top: 14px; font-size: 15px; }
+.rules li::before { content: counter(r, decimal-leading-zero); display: block; font: 600 12px/1 var(--f-mono); color: var(--muted); margin-bottom: 10px; }
+.rules b { display: block; font: 700 18px/1.2 var(--f-display); letter-spacing: -0.01em; margin-bottom: 6px; }
+.patterns-wrap { overflow-x: auto; margin-top: 40px; }
+.patterns { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 14px; }
+.patterns th, .patterns td { text-align: left; vertical-align: top; padding: 12px 14px 12px 0; border-bottom: 1px solid var(--line); }
+.patterns th { font: 600 11px/1 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.patterns td:first-child { font-weight: 700; white-space: nowrap; }
+.divider { border: 0; border-top: 1px solid var(--line); margin: 56px 0 0; }
+
 /* rules + sources */
 .end { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 40px; margin-top: 56px; }
 .end h3 { font: 700 22px/1.1 var(--f-display); letter-spacing: -0.02em; margin: 0 0 14px; }
@@ -92,6 +114,39 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     <p class="intro">Slide copy is sample copy. Numbers tagged "Sample data" are illustrative; cited facts name their source on the slide. Tap any slide to view it full size.</p>
     <div class="facts"><span><b>20</b> carousel types</span><span><b>10</b> visual styles</span><span><b>1080 × 1350</b> portrait slides</span><span><b>45px+</b> body text</span></div>
   </header>
+
+  <section class="covers" aria-labelledby="covers-h">
+    <h2 class="sec-h" id="covers-h">Cover wall</h2>
+    <p class="sec-p">The first page is all the feed shows, so it decides whether anyone swipes. Each cover below is shown at roughly feed size and uses a different hook pattern. Tap one to see it full size.</p>
+    <ol class="wall" id="wall"></ol>
+
+    <ol class="rules">
+      <li><b>A visual, not a title card</b>One object fills half the frame and runs off the edge: a table, a chart, a checklist, a page.</li>
+      <li><b>6–10 words, one promise</b>A number or a specific outcome, still readable at a third of full size.</li>
+      <li><b>Show the payoff</b>A peek at the real content proves it's worth saving before anyone swipes.</li>
+      <li><b>Leave a gap</b>A cut-off card, a blank score, a struck-out word. Curiosity is the reason to swipe.</li>
+      <li><b>Same frame every time</b>Your name top-left, a swipe button bottom-right, one accent colour.</li>
+    </ol>
+
+    <div class="patterns-wrap">
+      <table class="patterns">
+        <thead><tr><th>Cover pattern</th><th>Where it shows up</th><th>Used here</th></tr></thead>
+        <tbody>
+          <tr><td>Big number</td><td>Most common LinkedIn cover advice for 2026: one number, one line of context.</td><td>Retention math, $0 → $1M</td></tr>
+          <tr><td>The thing itself</td><td>Design-tips creators show the actual UI, page or screenshot as the hero.</td><td>Pricing teardown, cheat sheet, checklist, experiment</td></tr>
+          <tr><td>Before / after split</td><td>Design and copywriting niches; listed as a core layout in carousel template guides.</td><td>Homepage rewrite</td></tr>
+          <tr><td>Collage, stickers, notes</td><td>2026 Instagram trend: cut-outs, sticky notes, hand-drawn arrows, tape.</td><td>Mistakes, prioritisation</td></tr>
+          <tr><td>Diagram as hero</td><td>Framework creators: the model is what gets screenshotted and reposted.</td><td>Growth loops, AARRR, content system</td></tr>
+          <tr><td>Quiz or blank to fill</td><td>Self-assessment posts that pull comments.</td><td>Growth score, which motion fits you</td></tr>
+          <tr><td>Struck-out word or claim</td><td>Contrarian and myth-busting posts.</td><td>MQLs, growth myths</td></tr>
+          <tr><td>Editorial type</td><td>Magazine-style covers for opinion and quote posts.</td><td>Drucker quote, glossary</td></tr>
+          <tr><td>Your face + headline</td><td>Personal-brand creators: a cut-out photo beside a bold line. Not built yet, because it needs your photo.</td><td>Ready once you add a photo</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="divider">
 
   <nav class="filter" aria-label="Filter by what the carousel is built to earn">
     <div class="chips" id="chips"></div>
@@ -145,6 +200,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 </dialog>
 
 <script src="engine/render.js"></script>
+<script src="engine/covers.js"></script>
 <script src="content/growth-examples.js"></script>
 <script>
 (function () {
@@ -172,6 +228,18 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         ${rendered[i].map((html, n) => `<button type="button" class="thumb" role="listitem" data-c="${i}" data-n="${n}" aria-label="Open slide ${n + 1} of ${rendered[i].length}">${html}</button>`).join("")}
       </div>
     </li>`).join("");
+
+  // cover wall
+  const PATTERN = {
+    loops: "Diagram as hero", metrics: "Peek at the content", experiment: "Object + stamp", myths: "Struck-out list",
+    "hero-rewrite": "Before / after split", mistakes: "Sticky-note collage", "retention-stat": "Number as a chart", "gtm-motions": "Pick one (quiz)",
+    prioritise: "Framework peek", aarrr: "Giant letters", "arr-stages": "Route to a goal", "launch-checklist": "Object + sticker",
+    hooks: "Fanned cards, last one cut off", mql: "Giant struck word", "payback-case": "Result chart", glossary: "Dictionary crop",
+    drucker: "Quote as headline", "content-system": "One → many", scorecard: "Blank score to fill", "pricing-teardown": "Annotated screenshot",
+  };
+  document.getElementById("wall").innerHTML = data.map((c, i) => `
+    <li><button type="button" class="thumb" data-c="${i}" data-n="0" aria-label="Open ${esc(c.type)} cover">${rendered[i][0]}</button>
+      <p class="cap">${esc(PATTERN[c.id] || c.type)}<span>${esc(c.type)}</span></p></li>`).join("");
 
   // filter
   const counts = { all: data.length };
@@ -207,8 +275,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     prev.disabled = si === 0; next.disabled = si === rendered[ci].length - 1;
     fit();
   }
-  document.getElementById("entries").addEventListener("click", (e) => {
-    const t = e.target.closest(".thumb"); if (!t) return;
+  document.addEventListener("click", (e) => {
+    const t = e.target.closest(".thumb"); if (!t || t.closest("#lb")) return;
     ci = +t.dataset.c; si = +t.dataset.n; show();
     if (typeof lb.showModal === "function") lb.showModal(); else lb.setAttribute("open", "");
   });

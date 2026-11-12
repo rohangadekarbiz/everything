@@ -40,8 +40,10 @@ for (const id of ids) {
       const main = s.querySelector(".s-main");
       const sr = s.getBoundingClientRect();
       const out = [];
-      if (main.scrollHeight > main.clientHeight + 1) out.push(`slide ${s.dataset.n}: content taller than its area by ${main.scrollHeight - main.clientHeight}px`);
+      const isHook = s.classList.contains("k-hook"); // covers bleed off the edge on purpose
+      if (!isHook && main.scrollHeight > main.clientHeight + 1) out.push(`slide ${s.dataset.n}: content taller than its area by ${main.scrollHeight - main.clientHeight}px`);
       s.querySelectorAll(".s-main *").forEach((el) => {
+        if (el.closest(".hv")) return;
         const r = el.getBoundingClientRect();
         if (r.width && (r.right > sr.right - 30 || r.left < sr.left + 30 || r.bottom > sr.bottom - 30)) {
           const cls = typeof el.className === "string" ? el.className : el.className.baseVal;
