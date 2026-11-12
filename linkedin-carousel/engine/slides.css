@@ -735,3 +735,21 @@
 .h-who .nm { font: 800 76px/1 var(--display); font-stretch: 75%; }
 .h-who .pr { font-size: 44px; color: var(--ink2); margin-top: 14px; max-width: 480px; }
 .t-house.has-face .h-acts { max-width: 620px; }
+
+/* ---------- house palettes (c.palette) ---------- */
+/* sun: signal yellow ground */
+.t-house.pal-sun:not(.is-ink) { --bg: #f6c823; --ink: #0b0b0a; --ink2: #2b2511; --muted: #5c4d16; --hlc: #ffffff; --marker: #d3221a; background-color: var(--bg); }
+.t-house.pal-sun.is-ink { --hlc: #f6c823; }
+
+/* teal: deep teal ground, cream type, yellow marker */
+.t-house.pal-teal:not(.is-ink) { --bg: #0e6763; --ink: #f7f3e8; --ink2: #d6ebe6; --muted: #a6cfc8; --hlc: #ff6b3d; --marker: #ffd23f; background-color: var(--bg); color: var(--ink); }
+.t-house.pal-teal.is-ink { --bg: #08302e; background-color: #08302e; --marker: #ffd23f; --hlc: #ff6b3d; }
+
+/* block: a different flat colour per slide; cover and closing slide are yellow */
+.t-house.pal-block:not(.is-ink) { --ink: #0b0b0a; --ink2: #24221d; --muted: #4f4b40; --marker: #d3221a; --hlc: #ffffff; background-color: var(--bg); }
+.t-house.pal-block.pal-i0:not(.is-ink) { --bg: #f6c823; }
+.t-house.pal-block.pal-i1:not(.is-ink) { --bg: #8fcdf0; }
+.t-house.pal-block.pal-i2:not(.is-ink) { --bg: #ff9ec2; }
+.t-house.pal-block.pal-i3:not(.is-ink) { --bg: #e3e2dc; --hlc: #ffe93b; }
+.t-house.pal-block.pal-first:not(.is-ink), .t-house.pal-block.pal-last:not(.is-ink) { --bg: #f6c823; --hlc: #ffffff; }
+.t-house.pal-block.is-ink { --hlc: #f6c823; }
