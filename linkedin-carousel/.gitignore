@@ -1,1 +1,5 @@
 out/
+# Personal portraits stay local: this repository is public.
+assets/author-point.png
+assets/author-arms.png
+assets/raw/author-*.png

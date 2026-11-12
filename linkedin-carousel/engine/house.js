@@ -40,8 +40,8 @@
 
   // The author's portrait: a halftone cut-out standing on the bottom edge, name on a paper strip across the shoulder.
   const hasFace = (ctx) => !!ctx.author.photo && ctx.carousel.face !== false;
-  const face = (ctx, { x, w, rot = -3, bottom = -70, tagX, tagY, tagRot = -4 }) => `
-    <img class="h-cut h-face" src="${esc(ctx.author.photo)}" alt="" style="left:${x}px;bottom:${bottom}px;width:${w}px;transform:rotate(${rot}deg);z-index:3">
+  const face = (ctx, { x, w, rot = -3, bottom = -70, tagX, tagY, tagRot = -4, src }) => `
+    <img class="h-cut h-face" src="${esc(src || ctx.author.photo)}" alt="" style="left:${x}px;bottom:${bottom}px;width:${w}px;transform:rotate(${rot}deg);z-index:3">
     ${tagX == null ? "" : `<span class="h-nametag" style="left:${tagX}px;top:${tagY}px;transform:rotate(${tagRot}deg);${torn(77, "lr", 6, 9)}">${esc(ctx.author.name)}</span>`}`;
 
   /* ---------- cover art ---------- */
@@ -74,7 +74,7 @@
         ${s.num ? `<p class="h-num">${esc(s.num)}</p>` : ""}
         <h1 class="h-title" style="font-size:${s.size || 160}px;${s.width ? `max-width:${s.width}px` : ""}">${fmt(s.title)}</h1>
         ${f ? "" : `<p class="h-by"${s.by === "left" ? ' style="align-self:flex-start"' : ""}>${esc(ctx.author.name)}</p>`}`,
-      art: (s.art ? A[s.art.type](s.art, ctx) : "") + (f ? face(ctx, fp) : ""),
+      art: (s.art ? A[s.art.type](s.art, ctx) : "") + (f ? face(ctx, Object.assign({ src: ctx.author.photoCover }, fp)) : ""),
     };
   };
 
@@ -152,7 +152,7 @@
           <li><b>Save</b> ${fmt(s.save || "for your next planning session.")}</li>
         </ul>
         <div class="h-who"><p class="nm">Follow ${esc(a.name)}</p><p class="pr">${esc(a.promise)}</p></div>`,
-      art: f ? face(ctx, { x: 560, w: 520, rot: 3, bottom: -60 }) : "",
+      art: f ? face(ctx, { x: 610, w: 480, rot: 3, bottom: -60, src: ctx.author.photoEnd }) : "",
     };
   };
 

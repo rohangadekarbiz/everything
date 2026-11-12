@@ -734,7 +734,8 @@
 .h-who { margin-top: auto; }
 .h-who .nm { font: 800 76px/1 var(--display); font-stretch: 75%; }
 .h-who .pr { font-size: 44px; color: var(--ink2); margin-top: 14px; max-width: 480px; }
-.t-house.has-face .h-acts { max-width: 620px; }
+.t-house.has-face .h-acts { max-width: 600px; }
+.t-house.has-face .h-who { max-width: 520px; }
 
 /* ---------- house palettes (c.palette) ---------- */
 /* sun: signal yellow ground */

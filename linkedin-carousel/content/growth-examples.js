@@ -8,9 +8,12 @@ window.CAROUSEL_AUTHOR = {
   name: "Your Name",
   initials: "YN",
   promise: "One growth breakdown every week.",
-  // Background-removed portrait PNG (ideally B&W halftone with a white sticker border, to match the house style).
-  // The placeholder is a neutral stand-in; set to "" to run without a face.
-  photo: "assets/author-placeholder.png",
+  // Background-removed portrait PNGs (B&W halftone with a white sticker border, to match the house style).
+  // photo is the default; photoCover and photoEnd override it on the cover and the closing slide.
+  // Set photo to "" to run without a face.
+  photo: "assets/author-arms.png",
+  photoCover: "assets/author-point.png",
+  photoEnd: "assets/author-arms.png",
 };
 
 window.CAROUSELS = [

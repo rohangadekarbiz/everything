@@ -49,7 +49,7 @@
     {
       id: "house-myths", type: "Myth vs fact", ...base,
       slides: [
-        { kind: "hCover", title: "5 growth myths worth unlearning.", size: 168, art: { type: "mythPile", items: ["More traffic fixes growth.", "Going viral is luck.", "Growth is marketing's job.", "Copy what worked for them.", "A/B test everything."] } },
+        { kind: "hCover", title: "5 growth myths worth unlearning.", size: 168, facePos: { x: 790, w: 290, tagX: 800, tagY: 1262 }, art: { type: "mythPile", items: ["More traffic fixes growth.", "Going viral is luck.", "Growth is marketing's job.", "Copy what worked for them.", "A/B test everything."] } },
         { kind: "hMyth", n: "1", myth: "More traffic will fix growth.", fact: "If activation is broken, more traffic just leaks faster.", paper: "news", rot: -2.5, seed: 5, w: 860, size: 136 },
         { kind: "hMyth", n: "2", myth: "Going viral is luck.", fact: "Virality is designed: who gets invited, when, and why they say yes.", paper: "pad", rot: 3, seed: 8, w: 760, x: 160, size: 120 },
         { kind: "hMyth", n: "3", myth: "Growth is marketing's job.", fact: "Growth is product, marketing and sales running one system.", paper: "card", rot: -1.5, seed: 11, w: 840, x: 30, size: 132 },

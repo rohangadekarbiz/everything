@@ -23,6 +23,8 @@ JOBS = {
     "halftone-gauge-calc": {"mode": "trim"},
     "clay-tiles": {"mode": "trim"},
     "clay-loop": {"mode": "checker", "holes": [(985, 480)]},
+    "author-point": {"mode": "trim"},
+    "author-arms": {"mode": "checker-grid", "cell": 98, "white": 254, "grey": 232},
 }
 
 
@@ -57,6 +59,38 @@ def remove_checker(im, holes):
     return out
 
 
+def remove_checker_grid(im, cell, white, grey, tol=6, border=14):
+    """For black-and-white images, where 'grey and white' also describes the subject.
+    Removes only pixels that match the checkerboard's exact shade at their grid position,
+    then redraws an even white sticker border around the subject."""
+    g = np.asarray(im.convert("L")).astype(int)
+    h, w = g.shape
+    # Either checker shade, at any position (ChatGPT's grid isn't exactly regular), plus the old white border.
+    # The flood fill below only removes these where they connect to the image edge, so light areas inside
+    # the subject survive as long as the subject's outline is darker than the checker.
+    match = (np.abs(g - white) <= tol) | (np.abs(g - grey) <= tol) | (g >= 245)
+    mask = Image.fromarray((match * 255).astype(np.uint8), "L").copy()
+    for x in range(0, w, 20):
+        for y in (0, h - 1):
+            if mask.getpixel((x, y)) == 255:
+                ImageDraw.floodfill(mask, (x, y), 128)
+    for y in range(0, h, 20):
+        for x in (0, w - 1):
+            if mask.getpixel((x, y)) == 255:
+                ImageDraw.floodfill(mask, (x, y), 128)
+    subject = Image.fromarray(np.where(np.asarray(mask) == 128, 0, 255).astype(np.uint8), "L")
+    # Opening (erode then dilate) drops thin leftovers such as the anti-aliased rim of the old border,
+    # then a median filter drops speckles left by halftone noise.
+    subject = subject.filter(ImageFilter.MinFilter(9)).filter(ImageFilter.MaxFilter(9)).filter(ImageFilter.MedianFilter(5))
+    sticker = subject.filter(ImageFilter.MaxFilter(2 * border + 1)).filter(ImageFilter.GaussianBlur(1.5))
+    out = Image.new("RGBA", im.size, (255, 255, 255, 0))
+    out.putalpha(sticker)
+    photo = im.convert("RGBA")
+    photo.putalpha(subject.filter(ImageFilter.MinFilter(5)).filter(ImageFilter.GaussianBlur(0.8)))  # keep the photo edge inside the white border
+    out.alpha_composite(photo)
+    return out
+
+
 for name, job in JOBS.items():
     src = RAW / f"{name}.png"
     if not src.exists():
@@ -65,6 +99,8 @@ for name, job in JOBS.items():
     im = Image.open(src)
     if job["mode"] == "copy":
         out = im.convert("RGB")
+    elif job["mode"] == "checker-grid":
+        out = trim(remove_checker_grid(im, job["cell"], job["white"], job["grey"]))
     elif job["mode"] == "checker":
         out = trim(remove_checker(im, job.get("holes", [])))
     else:
