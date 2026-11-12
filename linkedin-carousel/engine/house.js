@@ -55,6 +55,11 @@
   // A single cut-out placed by hand: { src, x, y, w, rot }.
   A.img = (a) => img(a.src, a.x, a.y, a.w, a.rot || 0);
 
+  // Several pieces at once: { items: [{ type, ...params }] }.
+  A.multi = (a, ctx) => a.items.map((it) => A[it.type](it, ctx)).join("");
+  // A paper clipping with text, no strike-through: { text, x, y, size, rot, z }.
+  A.clip = (a) => `<p class="h-clip no-strike" style="left:${a.x}px;top:${a.y}px;font-size:${a.size || 64}px;transform:rotate(${a.rot || 0}deg);z-index:${a.z || 5};${torn(a.seed || 31, "lr", 7, 9)}">${esc(a.text)}</p>`;
+
   A.gauge = (a, ctx) => img(a.src, hasFace(ctx) ? 420 : 300, hasFace(ctx) ? 810 : 850, hasFace(ctx) ? 800 : 900, -5);
 
   // The myths as clippings, each one crossed out, piled up and running off the page.

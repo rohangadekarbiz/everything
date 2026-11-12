@@ -24,7 +24,7 @@ JOBS = {
     "clay-tiles": {"mode": "trim"},
     "clay-loop": {"mode": "checker", "holes": [(985, 480)]},
     "author-point": {"mode": "trim"},
-    "author-arms": {"mode": "checker-grid", "cell": 98, "white": 254, "grey": 232},
+    "author-arms": {"mode": "checker-grid", "cell": 98, "white": 254, "grey": 232, "opening": 41},  # wide opening: clears a leftover checker chunk by the hair
 }
 
 
@@ -59,7 +59,7 @@ def remove_checker(im, holes):
     return out
 
 
-def remove_checker_grid(im, cell, white, grey, tol=6, border=14):
+def remove_checker_grid(im, cell, white, grey, tol=6, border=14, opening=9):
     """For black-and-white images, where 'grey and white' also describes the subject.
     Removes only pixels that match the checkerboard's exact shade at their grid position,
     then redraws an even white sticker border around the subject."""
@@ -81,7 +81,7 @@ def remove_checker_grid(im, cell, white, grey, tol=6, border=14):
     subject = Image.fromarray(np.where(np.asarray(mask) == 128, 0, 255).astype(np.uint8), "L")
     # Opening (erode then dilate) drops thin leftovers such as the anti-aliased rim of the old border,
     # then a median filter drops speckles left by halftone noise.
-    subject = subject.filter(ImageFilter.MinFilter(9)).filter(ImageFilter.MaxFilter(9)).filter(ImageFilter.MedianFilter(5))
+    subject = subject.filter(ImageFilter.MinFilter(opening)).filter(ImageFilter.MaxFilter(opening)).filter(ImageFilter.MedianFilter(5))
     sticker = subject.filter(ImageFilter.MaxFilter(2 * border + 1)).filter(ImageFilter.GaussianBlur(1.5))
     out = Image.new("RGBA", im.size, (255, 255, 255, 0))
     out.putalpha(sticker)
@@ -100,7 +100,7 @@ for name, job in JOBS.items():
     if job["mode"] == "copy":
         out = im.convert("RGB")
     elif job["mode"] == "checker-grid":
-        out = trim(remove_checker_grid(im, job["cell"], job["white"], job["grey"]))
+        out = trim(remove_checker_grid(im, job["cell"], job["white"], job["grey"], opening=job.get("opening", 9)))
     elif job["mode"] == "checker":
         out = trim(remove_checker(im, job.get("holes", [])))
     else:

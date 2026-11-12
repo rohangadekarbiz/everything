@@ -829,3 +829,5 @@
 .t-house.mod-titlecol .h-title { color: var(--titlecol, #d9ff3b); }
 /* the art layer must not isolate, or the portrait has nothing to multiply onto */
 .t-house.mod-print .s-art { z-index: auto; }
+
+.h-clip.no-strike::after { display: none; }
