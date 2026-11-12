@@ -1,7 +1,9 @@
 // Export carousels to LinkedIn-ready files.
 //   node export.mjs                 -> every carousel
 //   node export.mjs loops metrics   -> just these ids
-//   node export.mjs --check         -> also report slides whose content overflows
+//   node export.mjs --check         -> also report slides whose content overflows, and composition faults on
+//                                      slides with the portrait (text on the face etc.; tools/composition-check.mjs).
+//                                      Exits with code 1 when anything is found.
 //   node export.mjs --pdf-only      -> skip the PNGs
 // Output: out/<id>.pdf (upload this as a LinkedIn document post) and out/<id>/slide-NN.png
 import { createRequire } from "node:module";
@@ -9,6 +11,7 @@ import { mkdir, readFile } from "node:fs/promises";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import path from "node:path";
 import vm from "node:vm";
+import { compositionCheck } from "./tools/composition-check.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 // require() finds a locally installed or globally available Playwright.
@@ -53,6 +56,7 @@ for (const id of ids) {
       return [...new Set(out)];
     }));
     bad.forEach((b) => problems.push(`${id} ${b}`));
+    (await compositionCheck(page, here)).forEach((b) => problems.push(`${id} ${b}`));
   }
 
   if (pngs) {
@@ -67,3 +71,4 @@ for (const id of ids) {
 
 await browser.close();
 if (check) console.log(problems.length ? "\nLayout problems:\n" + problems.join("\n") : "\nNo layout problems found.");
+if (check && problems.length) process.exitCode = 1;

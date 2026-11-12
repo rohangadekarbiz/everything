@@ -12,8 +12,17 @@ window.CAROUSEL_AUTHOR = {
   // photo is the default; photoCover and photoEnd override it on the cover and the closing slide.
   // Set photo to "" to run without a face.
   photo: "assets/author-arms.png",
-  photoCover: "assets/author-point.png",
+  photoCover: "assets/author-arms.png",
   photoEnd: "assets/author-arms.png",
+  // Where the face is in each portrait, as fractions of the (unflipped) file: [x0, y0, x1, y1].
+  // face = forehead to chin, cheek to cheek. head = face plus hair, ears and beard.
+  // Layouts place the portrait by its face, and `node export.mjs --check` keeps every word off it.
+  // Measure a new portrait with: python3 tools/face_box.py assets/<file>.png --overlay out/facebox-check.png
+  portraits: {
+    "assets/author-arms.png": { size: [988, 1396], face: [0.217, 0.106, 0.615, 0.422], head: [0.19, 0.006, 0.642, 0.422] },
+    "assets/author-point.png": { size: [978, 1395], face: [0.221, 0.111, 0.646, 0.423], head: [0.192, 0.006, 0.675, 0.423] },
+    "assets/author-placeholder.png": { size: [827, 1013], face: [0.275, 0.167, 0.722, 0.535], head: [0.244, 0.003, 0.752, 0.535] },
+  },
 };
 
 window.CAROUSELS = [

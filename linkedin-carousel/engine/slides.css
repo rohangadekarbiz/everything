@@ -790,18 +790,27 @@
 .t-house.pal-tangerine { --strike: #1f3dff; }
 .t-house.pal-teal { --strike: #ff6b3d; }
 
-/* Face-led cover: headline sits in front of the portrait, like a magazine masthead. */
+/* Face-led cover: the headline is a band above the portrait (composition rules in engine/house.js). It stays on the
+   top layer so that a mistake shows as text on the photo, which `export.mjs --check` then reports, never as hidden words. */
 .t-house.face-lead .s-main { z-index: 5; }
+.t-house.face-lead .h-title { text-wrap: nowrap; }
+.h-lockup { display: flex; align-items: flex-start; gap: 34px; }
+.t-house.face-lead .h-lockup .h-num { margin: 0 0 0 -6px; flex: none; }
 
 /* ======================================================================
    COLOUR TREATMENTS (c.mods), layered on any house palette
    ====================================================================== */
 .t-house { isolation: isolate; }
 
-/* blob: a solid colour disc behind the portrait */
-.t-house.mod-blob.face-lead::before { content: ""; position: absolute; z-index: -1; width: 860px; height: 860px; border-radius: 50%; right: -200px; bottom: -230px; background: var(--blob, #d9ff3b); }
+/* The colour shape behind the portrait. face() emits .h-halo with the face centre (--fx, --fy) and face height (--fh),
+   so the shape always frames the face wherever the portrait goes (composition rule 6). */
+.h-halo { display: none; position: absolute; z-index: 0; background: var(--blob, #d9ff3b); }
+/* blob: a solid colour disc centred just under the eyes; the hair breaks out of its top edge */
+.t-house.mod-blob .h-halo { display: block; --d: calc(var(--fh) * var(--halo-d, 1.9)); width: var(--d); height: var(--d); border-radius: 50%;
+  left: calc(var(--fx) - var(--d) / 2); top: calc(var(--fy) + var(--fh) * var(--halo-dy, .2) - var(--d) / 2); }
 /* arch: a tall rounded arch behind the portrait instead of a disc */
-.t-house.mod-arch.face-lead::before { content: ""; position: absolute; z-index: -1; width: 640px; height: 980px; border-radius: 320px 320px 0 0; right: -20px; bottom: 0; background: var(--blob, #d9ff3b); }
+.t-house.mod-arch .h-halo { display: block; --d: calc(var(--fh) * var(--halo-d, 1.7)); width: var(--d); border-radius: 999px 999px 0 0;
+  left: calc(var(--fx) - var(--d) / 2); top: calc(var(--fy) - var(--fh) * .62); bottom: 0; }
 
 /* split: two flat colours divided on a diagonal */
 .t-house.mod-split:not(.is-ink) { background-image: linear-gradient(162deg, var(--bg) 0 54%, var(--bg2, #d9ff3b) 54% 100%); }
