@@ -56,3 +56,12 @@ Cover visuals (`kind: "hook"`, `visual: { type }`): `loop`, `sheet`, `stamp`, `m
 Slide kinds: `hook`, `cover`, `bigstat`, `poster`, `list`, `table`, `mythfact`, `checks`, `hooks`, `timeline`, `dict`, `quote`, `kpis`, `scorecard`, `scorekey`, `stickies`, `matrix`, `funnel`, `leak`, `expcard`, `hero`, `pricing`, `pinlist`, `flow`, `ladder`, `loops`, `curves`, `linechart`, `cta`. See `content/growth-examples.js` for an example of each.
 
 Text shortcuts: `*word*` highlights, `\n` breaks a line, `{blank}` draws a fill-in slot (in `hooks`).
+
+## Covers with the portrait
+
+Composition rules are at the top of `engine/house.js`. In short: the headline is a band across the top, the portrait hangs under it, and no words go on the face.
+
+- Place the portrait by its face: `facePos: { fh, cx, headTop, rot }` (face height, face centre x, top of the hair, tilt). A `faceLead` cover fills these in from the headline's line count, so break headline lines with `\n`.
+- Face boxes per portrait file live in `CAROUSEL_AUTHOR.portraits`. Measure a new portrait with `python3 tools/face_box.py assets/<file>.png --overlay out/facebox-check.png` and look at the overlay.
+- `node export.mjs <ids> --check` fails (exit code 1) if any text is within 40px of the face or 16px of the hair, if bare type runs over a cut-out, if clippings cover each other's words, and on a few related faults (`tools/composition-check.mjs`).
+- `python3 tools/cover_sheet.py out/review.png --cols 6 id id:last ...` makes a labelled sheet at thumbnail size.

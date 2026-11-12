@@ -22,7 +22,7 @@
     {
       id: "house-metrics", type: "Cheat sheet", ...base,
       slides: [
-        { kind: "hCover", faceLead: true, num: "12", title: "growth metrics\nevery founder\nshould know.", size: 112, by: "left", art: { type: "img", src: "assets/halftone-gauge-calc.png", x: -50, y: 800, w: 450, rot: -6 } },
+        { kind: "hCover", faceLead: true, num: "12", title: "growth metrics\nevery founder\nshould know.", size: 112, by: "left", art: { type: "img", src: "assets/halftone-gauge-calc.png", x: -70, y: 850, w: 440, rot: -6 } },
         { kind: "hLedger", title: "Unit economics", size: 130, select: 1, rows: [
           ["CAC", "Sales + marketing spend ÷ new customers", "Falling over time"],
           ["LTV", "ARPA × gross margin ÷ churn rate", "3× CAC or more"],
@@ -49,7 +49,7 @@
     {
       id: "house-myths", type: "Myth vs fact", ...base,
       slides: [
-        { kind: "hCover", faceLead: true, title: "5 growth myths\nworth unlearning.", size: 140, facePos: { fh: 365, cx: 730 }, art: { type: "mythPile", lead: true, items: ["More traffic fixes growth.", "Going viral is luck.", "Growth is marketing's job.", "Copy what worked for them.", "A/B test everything."] } },
+        { kind: "hCover", faceLead: true, title: "5 growth myths\nworth unlearning.", size: 140, facePos: { fh: 365, cx: 640 }, art: { type: "mythPile", lead: true, items: ["More traffic fixes growth.", "Going viral is luck.", "Growth is marketing's job.", "Copy what worked for them.", "A/B test everything."] } },
         { kind: "hMyth", n: "1", myth: "More traffic will fix growth.", fact: "If activation is broken, more traffic just leaks faster.", paper: "news", rot: -2.5, seed: 5, w: 860, size: 136 },
         { kind: "hMyth", n: "2", myth: "Going viral is luck.", fact: "Virality is designed: who gets invited, when, and why they say yes.", paper: "pad", rot: 3, seed: 8, w: 760, x: 160, size: 120 },
         { kind: "hMyth", n: "3", myth: "Growth is marketing's job.", fact: "Growth is product, marketing and sales running one system.", paper: "card", rot: -1.5, seed: 11, w: 840, x: 30, size: 132 },

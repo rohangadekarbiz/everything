@@ -4,7 +4,7 @@
 //   - bare type never over a cut-out's visible pixels; type on paper (clippings) may cross the body only,
 //     and must not be hidden behind a cut-out
 //   - no prop in front of the face; the face mostly inside the slide and, on face-led covers, a sensible size
-//   - bare type stays out of the right margin; the portrait runs off the bottom edge; no low-contrast type on the colour disc; cover headline >= MIN_TITLE px
+//   - clippings do not cover each other's words; bare type stays out of the right margin; the portrait runs off the bottom edge; no low-contrast type on the colour disc; cover headline >= MIN_TITLE px
 //
 // How: every text line is sampled on a 6px grid. Each sample point is mapped back through the cut-out's CSS
 // transform (rotation, flip) into the image, where it is tested against the face / head boxes (data-face,
@@ -104,7 +104,9 @@ export async function compositionCheck(page, root) {
       slide.querySelectorAll(PAPER).forEach((el) => {
         if (getComputedStyle(el).display === "none") return;
         const f = frame(el, slide);
-        items.push({ label: quote(el.textContent), pts: grid(0, 0, f.w, f.h, f.out), paper: true, z: el.closest(".s-art") ? f.z : null });
+        const cs = getComputedStyle(el), pad = (k) => parseFloat(cs["padding" + k]) || 0;
+        items.push({ label: quote(el.textContent), pts: grid(0, 0, f.w, f.h, f.out), paper: true, z: el.closest(".s-art") ? f.z : null, f,
+          words: grid(pad("Left"), pad("Top"), f.w - pad("Right"), f.h - pad("Bottom"), f.out) });
       });
 
       const cutInfo = cuts.map((img) => {
@@ -162,6 +164,14 @@ export async function compositionCheck(page, root) {
           if (on > 1) say(`${it.label} sits on the colour shape with too little contrast`);
         }
       });
+
+      // A clipping must not cover the words of the clipping under it (later in the page = on top, unless z-index says otherwise).
+      const papers = items.filter((it) => it.words);
+      papers.forEach((a, i) => papers.forEach((b, j) => {
+        if (a === b || (a.z ?? 99) > (b.z ?? 99) || ((a.z ?? 99) === (b.z ?? 99) && i > j)) return;
+        const hit = a.words.filter(([x, y]) => { const [u, v] = b.f.into(x, y); return u > 0 && v > 0 && u < b.f.w && v < b.f.h; }).length;
+        if (hit / a.words.length > 0.03) say(`${a.label} is ${Math.round((hit / a.words.length) * 100)}% covered by the clipping ${b.label}`);
+      }));
 
       // Unwrapped headline lines must still respect the right margin.
       for (const it of items) {

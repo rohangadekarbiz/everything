@@ -109,13 +109,14 @@
   A.mythPile = (a, ctx) => {
     // [x, y, rotation, font size]; with a portrait the lower clippings are set smaller so they stop short of it.
     // Face-led: the pile starts under the chin and buries the chest, so no clipping can reach the face.
-    const y0 = ctx.place ? ctx.place.chin + (a.gap ?? 54) : 640, dy = a.pitch || 86;
-    const spots = a.lead ? [[56, 0, -2, 48], [150, 1, 2, 48], [36, 2, 1.5, 48], [130, 3, -2, 48], [70, 4, 1.5, 48]].map(([x, i, r, f]) => [x, y0 + i * dy, r, f])
+    // Slim strips on an 84px pitch: they touch but never cover each other's words.
+    const y0 = ctx.place ? ctx.place.chin + (a.gap ?? 54) : 640, dy = a.pitch || 84;
+    const spots = a.lead ? [[56, 0, -2, 50], [150, 1, 2, 50], [36, 2, 1.5, 50], [130, 3, -2, 50], [70, 4, 1.5, 50]].map(([x, i, r, f]) => [x, y0 + i * dy, r, f])
                 : hasFace(ctx) ? [[70, 640, -3, 70], [330, 775, 2.5, 70], [50, 905, 1.5, 50], [36, 1030, -2.5, 50], [70, 1150, 2, 50]]
                                : [[70, 640, -3, 70], [330, 775, 2.5, 70], [60, 910, 1.5, 70], [40, 1050, -2.5, 66], [70, 1190, 2, 70]];
     return a.items.map((t, i) => {
       const [x, y, rot, fs] = spots[i];
-      return `<p class="h-clip" style="left:${x}px;top:${y}px;font-size:${fs}px;transform:rotate(${rot}deg);z-index:${(a.lead ? 4 : 2) + (i % 2)};--tilt:${[-1.6, 1.2, -0.8, 1.8, -1.2][i]}deg;${torn(90 + i, "lr", 7, 9)}">${esc(t)}</p>`;
+      return `<p class="h-clip" style="left:${x}px;top:${y}px;font-size:${fs}px;transform:rotate(${rot}deg);z-index:${a.lead ? 4 : 2 + (i % 2)};${a.lead ? "padding:11px 32px 9px;" : ""}--tilt:${[-1.6, 1.2, -0.8, 1.8, -1.2][i]}deg;${torn(90 + i, "lr", 7, 9)}">${esc(t)}</p>`;
     }).join("");
   };
 
@@ -227,7 +228,8 @@
           <li><b>Save</b> ${fmt(s.save || "for your next planning session.")}</li>
         </ul>
         <div class="h-who"><p class="nm">Follow ${esc(a.name)}</p><p class="pr">${esc(a.promise)}</p></div>`,
-      art: f ? face(ctx, { x: 610, w: 480, rot: 3, bottom: -60, src: ctx.author.photoEnd }) : "",
+      // Small, bottom-right, clear of the text column (which is capped at 600px wide when there is a portrait).
+      art: f ? face(ctx, { fh: 220, cx: 868, headTop: 736, rot: 3, src: ctx.author.photoEnd }) : "",
     };
   };
 
