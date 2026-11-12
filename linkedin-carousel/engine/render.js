@@ -249,7 +249,9 @@
       const fn = L[s.kind];
       if (!fn) throw new Error(`Unknown slide kind: ${s.kind}`);
       const last = i === total - 1;
-      return `<section class="slide t-${c.theme} k-${s.kind}" data-carousel="${esc(c.id)}" data-n="${i + 1}">
+      // s.bg: a full-bleed background image (e.g. an illustration with space left for the headline).
+      const bg = s.bg ? ` style="background-image:url('${esc(s.bg)}');background-size:cover;background-position:center bottom"` : "";
+      return `<section class="slide t-${c.theme} k-${s.kind}${s.bg ? " has-bg" : ""}" data-carousel="${esc(c.id)}" data-n="${i + 1}"${bg}>
         <header class="s-top"><span class="who"><span class="mark">${esc(author.initials)}</span>${esc(author.name)}</span><span>${pad(i + 1)} / ${pad(total)}</span></header>
         <div class="s-main">${fn(s, ctx)}</div>
         <footer class="s-foot"><span>${esc(c.footer || c.type)}</span><span class="swipe">${last ? "" : i === 0 ? "Swipe →" : "→"}</span></footer>

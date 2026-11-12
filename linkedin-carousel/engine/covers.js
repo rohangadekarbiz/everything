@@ -9,7 +9,7 @@
   const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const fmt = (s) => esc(s).replace(/\*(.+?)\*/g, '<em class="hl">$1</em>').replace(/~(.+?)~/g, '<s class="strike">$1</s>').replace(/\n/g, "<br>");
   const pad = (n) => String(n).padStart(2, "0");
-  const V = {};
+  const V = (root.Carousel.coverVisuals = root.Carousel.coverVisuals || {});
 
   L.hook = (s, ctx) => {
     const head = `<div class="hook-head">

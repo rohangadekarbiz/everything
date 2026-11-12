@@ -5,7 +5,7 @@
 <title>Carousel export</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Caveat:wght@400..700&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Instrument+Sans:wght@400..700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400..800&family=Kalam:wght@400;700&family=Schibsted+Grotesk:wght@400..900&display=block">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Courier+Prime:wght@400;700&family=Permanent+Marker&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Caveat:wght@400..700&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Instrument+Sans:wght@400..700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400..800&family=Kalam:wght@400;700&family=Schibsted+Grotesk:wght@400..900&display=block">
 <link rel="stylesheet" href="engine/slides.css">
 <style>
   @page { size: 1080px 1350px; margin: 0; }
@@ -18,11 +18,14 @@
 <div id="deck"></div>
 <script src="engine/render.js"></script>
 <script src="engine/covers.js"></script>
+<script src="engine/vox.js"></script>
 <script src="content/growth-examples.js"></script>
+<script src="content/vox-pilot.js"></script>
 <script>
   // slide.html?id=<carousel id> renders one carousel, one slide per PDF page.
   const id = new URLSearchParams(location.search).get("id");
-  const c = window.CAROUSELS.find((x) => x.id === id) || window.CAROUSELS[0];
+  const all = window.CAROUSELS.concat(window.PILOTS || []);
+  const c = all.find((x) => x.id === id) || all[0];
   document.getElementById("deck").innerHTML = Carousel.renderCarousel(c, window.CAROUSEL_AUTHOR).join("");
   document.title = c.id;
   document.fonts.ready.then(() => { window.__ready = true; });
