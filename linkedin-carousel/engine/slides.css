@@ -789,3 +789,6 @@
 .t-house.pal-electric, .t-house.pal-violet, .t-house.pal-pop { --strike: #ff2e8f; }
 .t-house.pal-tangerine { --strike: #1f3dff; }
 .t-house.pal-teal { --strike: #ff6b3d; }
+
+/* Face-led cover: headline sits in front of the portrait, like a magazine masthead. */
+.t-house.face-lead .s-main { z-index: 5; }

@@ -40,8 +40,8 @@
 
   // The author's portrait: a halftone cut-out standing on the bottom edge, name on a paper strip across the shoulder.
   const hasFace = (ctx) => !!ctx.author.photo && ctx.carousel.face !== false;
-  const face = (ctx, { x, w, rot = -3, bottom = -70, tagX, tagY, tagRot = -4, src }) => `
-    <img class="h-cut h-face" src="${esc(src || ctx.author.photo)}" alt="" style="left:${x}px;bottom:${bottom}px;width:${w}px;transform:rotate(${rot}deg);z-index:3">
+  const face = (ctx, { x, w, rot = -3, bottom = -70, tagX, tagY, tagRot = -4, src, flip = false }) => `
+    <img class="h-cut h-face" src="${esc(src || ctx.author.photo)}" alt="" style="left:${x}px;bottom:${bottom}px;width:${w}px;transform:${flip ? "scaleX(-1) " : ""}rotate(${rot}deg);z-index:3">
     ${tagX == null ? "" : `<span class="h-nametag" style="left:${tagX}px;top:${tagY}px;transform:rotate(${tagRot}deg);${torn(77, "lr", 6, 9)}">${esc(ctx.author.name)}</span>`}`;
 
   /* ---------- cover art ---------- */
@@ -52,24 +52,29 @@
     [[330, 1262, 15], [322, 1316, 11]].map(([x, y, r]) => `<path d="M${x} ${y - r * 2.1} C${x + r * 1.2} ${y - r * 0.5} ${x + r} ${y + r} ${x} ${y + r} C${x - r} ${y + r} ${x - r * 1.2} ${y - r * 0.5} ${x} ${y - r * 2.1}Z" fill="#000"/>`).join("") +
     stroke([[270, 1318], [130, 1260], [50, 1090], [44, 900], [90, 760], [200, 668], [320, 664], [372, 760]], { sw: 15, arrow: true, seed: 4 }), 2);
 
+  // A single cut-out placed by hand: { src, x, y, w, rot }.
+  A.img = (a) => img(a.src, a.x, a.y, a.w, a.rot || 0);
+
   A.gauge = (a, ctx) => img(a.src, hasFace(ctx) ? 420 : 300, hasFace(ctx) ? 810 : 850, hasFace(ctx) ? 800 : 900, -5);
 
   // The myths as clippings, each one crossed out, piled up and running off the page.
   A.mythPile = (a, ctx) => {
     // [x, y, rotation, font size]; with a portrait the lower clippings are set smaller so they stop short of it.
-    const spots = hasFace(ctx) ? [[70, 640, -3, 70], [330, 775, 2.5, 70], [50, 905, 1.5, 50], [36, 1030, -2.5, 50], [70, 1150, 2, 50]]
+    const spots = a.lead ? [[40, 640, -3, 60], [70, 770, 2.5, 56], [30, 890, 1.5, 50], [40, 1005, -2.5, 50], [50, 1120, 2, 50]]
+                : hasFace(ctx) ? [[70, 640, -3, 70], [330, 775, 2.5, 70], [50, 905, 1.5, 50], [36, 1030, -2.5, 50], [70, 1150, 2, 50]]
                                : [[70, 640, -3, 70], [330, 775, 2.5, 70], [60, 910, 1.5, 70], [40, 1050, -2.5, 66], [70, 1190, 2, 70]];
     return a.items.map((t, i) => {
       const [x, y, rot, fs] = spots[i];
-      return `<p class="h-clip" style="left:${x}px;top:${y}px;font-size:${fs}px;transform:rotate(${rot}deg);z-index:${2 + (i % 2)};--tilt:${[-1.6, 1.2, -0.8, 1.8, -1.2][i]}deg;${torn(90 + i, "lr", 7, 9)}">${esc(t)}</p>`;
+      return `<p class="h-clip" style="left:${x}px;top:${y}px;font-size:${fs}px;transform:rotate(${rot}deg);z-index:${(a.lead ? 4 : 2) + (i % 2)};--tilt:${[-1.6, 1.2, -0.8, 1.8, -1.2][i]}deg;${torn(90 + i, "lr", 7, 9)}">${esc(t)}</p>`;
     }).join("");
   };
 
   L.hCover = (s, ctx) => {
     const f = hasFace(ctx);
-    const fp = Object.assign({ x: 640, w: 420, rot: 3, bottom: -60, tagX: 700, tagY: 1236, tagRot: 3 }, s.facePos || {});
+    // faceLead: the portrait is the main subject. Large, running off the bottom-right, mirrored so it points back at the headline.
+    const fp = Object.assign(s.faceLead ? { x: 400, w: 740, rot: 0, bottom: -150, flip: true } : { x: 640, w: 420, rot: 3, bottom: -60, tagX: 700, tagY: 1236, tagRot: 3 }, s.facePos || {});
     return {
-      cls: f ? "has-face" : "",
+      cls: (f ? "has-face" : "") + (f && s.faceLead ? " face-lead" : ""),
       main: `
         ${s.num ? `<p class="h-num">${esc(s.num)}</p>` : ""}
         <h1 class="h-title" style="font-size:${s.size || 160}px;${s.width ? `max-width:${s.width}px` : ""}">${fmt(s.title)}</h1>
